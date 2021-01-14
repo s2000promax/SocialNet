@@ -13,6 +13,7 @@ export const getPageSize = (state) => {
 }
 
 export const getTotalUsersCount = (state) => {
+    //debugger
     return state.usersPage.totalUsersCount;
 }
 

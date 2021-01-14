@@ -1,6 +1,16 @@
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+type DialogType = {
+    id: number
+    name: string
+}
+
+type MessageType = {
+    id: number
+    message: string
+}
+
 let initialState = { 
     dialogs : [
         {id: 1, name: 'Simych'},
@@ -9,7 +19,7 @@ let initialState = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Victor'},
         {id: 6, name: 'Valera'}
-     ],
+     ] as Array<DialogType>,
 messages : [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How is you?'},
@@ -17,10 +27,12 @@ messages : [
         {id: 4, message: 'Yo'},
         {id: 5, message: 'Yo'},
         {id: 6, message: '>|<opa'}
-      ]
+      ] as Array<MessageType>
 };
 
-const dialogsReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+
+const dialogsReducer = (state = initialState, action: any) => {
     let stateCopy;
     
     switch(action.type) {
@@ -42,8 +54,12 @@ const dialogsReducer = (state = initialState, action) => {
 
 }
 
+type SendMessageCreatorActionType = {
+    type: typeof SEND_MESSAGE
+    newMessageBody: string
+}
 
-export const sendMessageCreator = (newMessageBody) => { return ( { type: SEND_MESSAGE, newMessageBody } ) }
+export const sendMessageCreator = (newMessageBody: string): SendMessageCreatorActionType => { return ( { type: SEND_MESSAGE, newMessageBody } ) }
 
 
 export default dialogsReducer;
