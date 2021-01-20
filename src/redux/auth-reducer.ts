@@ -1,5 +1,5 @@
 import { stopSubmit } from 'redux-form';
-import { Auth } from '../api/api';
+import { Auth, ResultCodeEnum, ResultCodeForCaptchaEnum, securityAPI } from '../api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'GET_CAPTCHA_URL_SUCCESS';
@@ -22,7 +22,7 @@ let initialState = {
     email: null as string | null, 
     login: null as string | null,
     isAuth: false,
-    captchaUrl: null as string | null
+    captchaUrl: null as string | null  //if null, then captcha is not required
                    };
 
 const authReducer = (state = initialState, action: any): InitialStateType => {
@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
                          case GET_CAPTCHA_URL_SUCCESS:
                          
                          return {
-                             userId: 123,
+                             //userId: 123,
                                   ...state, 
                                   ...action.payload
                                  }
@@ -75,35 +75,42 @@ export const getCaptchaUrlSuccess = (captchaUrl: string): getCaptchaUrlSuccessAc
     } ) }
 
 export const getAuthUserData = () => async (dispatch: any) => {
-    let response = await Auth.me();
+    let meData = await Auth.me();
     
-            if (response.data.resultCode === 0) {
-            let {email, id, login} = response.data.data;
+            if (meData.resultCode === ResultCodeEnum.Success) {
+            let {email, id, login} = meData.data;
             dispatch(setAuthUserData(id, email, login, true));
         }       
 }
+/*
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     let response = await Auth.login(email, password, rememberMe);
          if (response.data.resultCode === 0) {}
 }
-             
-/*   
+  */           
+
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
-   let response = await Auth.login(email, password, rememberMe, captcha);
-        if (response.data.resultCode === 0) {
-            dispatch(setAuthUserData());
+   let loginData = await Auth.login(email, password, rememberMe, captcha);
+        if (loginData.resultCode === 0) {
+           // dispatch(setAuthUserData());
+           dispatch(getAuthUserData());
         } else {
             
-            if (response.data.resultCode === 10) {
+            if (loginData.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
                 dispatch(getCaptchaUrl());
             }
         
-            let message = response.data.messages.length > 0 ? response.data.messages[0]: "Some error"
+            let message = loginData.messages.length > 0 ? loginData.messages[0]: "Some error"
             let action = stopSubmit("login", {_error: message});
             dispatch(action);
         }                                       
 }
-*/
+
+export const getCaptchaUrl = () => async (dispatch: any) => {
+    const response = await securityAPI.getCaptchaUrl();
+    const captchaUrl = response.data.url;
+    dispatch(getCaptchaUrlSuccess(captchaUrl));
+}
    
 export const logout = () => async (dispatch: any) => {
     let response = await Auth.logout();

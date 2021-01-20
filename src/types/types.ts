@@ -5,7 +5,7 @@ export type PostType = {
 }
 
 export type ContactsType = {
-    gitHub: string
+    github: string
     vk: string
     facebook: string
     instagram: string
@@ -35,3 +35,7 @@ export type UserType = {
     status: string
     photos: PhotosType
 }
+
+
+
+

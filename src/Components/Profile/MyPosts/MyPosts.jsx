@@ -8,7 +8,7 @@ import Post from './Post/Post.jsx';
 const maxLength10 = maxLenghtCreator(10);
 
 const MyPosts = (props) => {
-  let postElements = props.posts.map(p => <Post message={p.message} likescount={p.likescount} />);
+  let postElements = props.posts.map(p => <Post key={p.id} message={p.message} likescount={p.likescount} />);
 
   let newPostElement = React.createRef();
 

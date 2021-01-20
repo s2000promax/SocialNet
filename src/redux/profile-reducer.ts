@@ -26,8 +26,10 @@ newPostText : ''
 export type InitialStateType = typeof initialState;
 
 const profileReducer = (state = initialState, action: any):InitialStateType => {
+    
 
     switch(action.type) {
+        
                           case ADD_POST: {
                               let newPost = {
                                 id: 7,
@@ -41,7 +43,7 @@ const profileReducer = (state = initialState, action: any):InitialStateType => {
                               }
                           }
                                             
-     case SET_USER_PROFILE:       
+     case SET_USER_PROFILE:       /*debugger*/
                                         return {
                                                 ...state,
                                                profile: action.profile
@@ -110,11 +112,13 @@ export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => {r
 
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
    const response = await usersAPI.getProfile(userId);
+
    dispatch(setUserProfile(response.data));
 } 
 
 export const getStatus = (userId: number) => async (dispatch: any) => {
     const response = await profileAPI.getStatus(userId);
+    //debugger
     dispatch(setStatus(response.data));
 } 
 
@@ -130,7 +134,7 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
                             //
                         }
 } 
-/*
+
 export const savePhoto = (file: any) => async (dispatch: any) => {
        let response = await profileAPI.savePhoto(file);
             if (response.data.resultCode === 0) {
@@ -150,6 +154,6 @@ export const saveProfile = (profile: ProfileType) => async (dispatch: any, getSt
                          }
                       
 } 
-*/
+
 
 export default profileReducer;
