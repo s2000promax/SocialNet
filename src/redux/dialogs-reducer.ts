@@ -1,3 +1,5 @@
+import { BaseThunkType, InferActionsTypes } from "./redux-store";
+
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
@@ -32,12 +34,20 @@ messages : [
 
 export type InitialStateType = typeof initialState;
 
-const dialogsReducer = (state = initialState, action: any) => {
+export const actions = {
+    sendMessage : (newMessageBody: string) => { return ( { type: 'SEND_MESSAGE', newMessageBody } ) as const }
+}
+
+type ActionsType = InferActionsTypes<typeof actions>
+
+type ThunkAction = BaseThunkType<ActionsType>
+
+const dialogsReducer = (state = initialState, action: ActionsType) => {
     let stateCopy;
     
     switch(action.type) {
                           
-                           case SEND_MESSAGE: 
+                           case 'SEND_MESSAGE': 
                                                let body = action.newMessageBody;
                                                return {
                                                 ...state,
@@ -54,12 +64,7 @@ const dialogsReducer = (state = initialState, action: any) => {
 
 }
 
-type SendMessageCreatorActionType = {
-    type: typeof SEND_MESSAGE
-    newMessageBody: string
-}
 
-export const sendMessageCreator = (newMessageBody: string): SendMessageCreatorActionType => { return ( { type: SEND_MESSAGE, newMessageBody } ) }
 
 
 export default dialogsReducer;
