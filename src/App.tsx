@@ -16,8 +16,8 @@ import { AppStateType } from './redux/redux-store';
 import store from './redux/redux-store';
 
 
-const DialogsContainer = React.lazy( () => import('./Components/Dialogs/DiaologsContainer'));
-const ProfileContainer = React.lazy( () => import('./Components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy( () => import('./Components/Dialogs/DiaologsContainer'))
+const ProfileContainer = React.lazy( () => import('./Components/Profile/ProfileContainer'))
 
 const SuspensedDialogs = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)

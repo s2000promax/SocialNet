@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { required } from '../../Utils/Validators/validators';
-import { createField, Input } from '../Common/FormControls/FormsControls';
+import { createField, GetStringKeys, Input } from '../Common/FormControls/FormsControls';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer';
 import { Redirect } from 'react-router-dom';
@@ -57,7 +57,7 @@ type LoginFormValuesType = {
     email: string 
 }
 
-type LoginFormValuesTypeKeys =Extract< keyof LoginFormValuesType, string>
+type LoginFormValuesTypeKeys =GetStringKeys<LoginFormValuesType>
 
 
 

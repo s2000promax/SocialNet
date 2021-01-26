@@ -51,6 +51,9 @@ export function createField<FormKeysType extends string> (
         )
 }
 
+export type GetStringKeys<T> = Extract<keyof T, string>
+
+
 /*
 export const Textarea = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error;
