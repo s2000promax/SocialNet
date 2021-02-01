@@ -1,7 +1,7 @@
 import { Action } from 'redux'
 import { FormAction, stopSubmit } from 'redux-form'
 import { ResultCodeEnum, ResultCodeForCaptchaEnum } from '../api/api'
-import { Auth} from '../api/auth-api'
+import  Auth from '../api/auth-api'
 import { securityAPI } from '../api/security-api'
 import {BaseThunkType, InferActionsTypes} from './redux-store'
 

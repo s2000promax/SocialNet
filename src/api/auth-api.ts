@@ -10,7 +10,7 @@ type LoginResponseDataType = {
     userId: number
 }
 
-export const Auth = {
+const Auth = {
     me() {
         return instanse.get<ResponseType<MeResponseDataType>>('auth/me/')
             .then(res => res.data)
@@ -22,3 +22,5 @@ export const Auth = {
     },
     logout() { return instanse.delete('auth/login/'); }
 }
+
+export default Auth
